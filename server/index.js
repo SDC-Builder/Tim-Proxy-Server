@@ -25,7 +25,7 @@ app.get('/about/bundle.js', async (req, res) => {
   }
 });
 
-app.get('/about/:id', async (req, res) => {
+app.get('/api/about/:id', async (req, res) => {
   try {
     const { data } = await axios.get(`http://localhost:3002/api/about/${req.params.id}`);
     res.send(data);
