@@ -1,97 +1,32 @@
-const path = require('path');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
 
-/*-------------------------------------------------*/
-
-module.exports = {
-
-  // webpack optimization mode
-  mode: (process.env.NODE_ENV === 'development' ? 'development' : 'production'),
-
-  // entry files
-  entry: [
-    './src/index.js', // react
-  ],
-
-  // output files and chunks
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'build/[name].js',
-  },
-
-  // module/loaders configuration
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: ['babel-loader'],
-      },
-      {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-      },
-    ],
-  },
-
-  // webpack plugins
-  plugins: [
-
-    // extract css to external stylesheet file
-    new MiniCssExtractPlugin({
-      filename: 'build/styles.css',
-    }),
-
-    // prepare HTML file with assets
-    new HTMLWebpackPlugin({
-      filename: 'index.html',
-      template: path.resolve(__dirname, 'src/index.html'),
-      minify: false,
-    }),
-
-    // copy static files from `src` to `dist`
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, 'src/assets'),
-          to: path.resolve(__dirname, 'dist/assets'),
-        },
-      ],
-    }),
-  ],
-
-  // resolve files configuration
-  resolve: {
-
-    // file extensions
-    extensions: ['.js', '.jsx', '.scss'],
-  },
-
-  // webpack optimizations
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        default: false,
-        vendors: false,
-
-        vendor: {
-          chunks: 'all', // both : consider sync + async chunks for evaluation
-          name: 'vendor', // name of chunk file
-          test: /node_modules/, // test regular expression
-        },
-      },
+const config = {
+    entry: {
+        vendor: ["@babel/polyfill", "react"], // Third party libraries
+        index: ["./src/index"]
+        /// Every pages entry point should be mentioned here
     },
-  },
-
-  // development server configuration
-  devServer: {
-    port: 8088,
-    historyApiFallback: true,
-  },
-
-  // generate source map
-  devtool: 'source-map',
-
+    output: {
+        path: path.resolve(__dirname, "public"), //destination for bundled output is under ./src/public
+        filename: "[name].js" // names of the bundled file will be name of the entry files (mentioned above)
+    },
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                use: {
+                    loader: "babel-loader", // asks bundler to use babel loader to transpile es2015 code
+                    options: {
+                        presets: ["@babel/preset-env", "@babel/preset-react"] 
+                    }
+                },
+                exclude: [/node_modules/, /public/]
+            }
+        ]
+    },
+    resolve: {
+        extensions: [".js", ".jsx", ".json", ".wasm", ".mjs", "*"]
+    } // If multiple files share the same name but have different extensions, webpack will resolve the one with the extension listed first in the array and skip the rest.
 };
+
+module.exports = config;
