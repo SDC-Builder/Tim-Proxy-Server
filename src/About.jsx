@@ -1,8 +1,4 @@
 import React from 'react';
-// import withStyles from 'isomorphic-style-loader/withStyles'
-// import { WithStyles } from 'isomorphic-style-loader-decorator';
-// const s = require('./style.scss');
-// import './style.css';
 
 import Detail from './components/detail/Detail.jsx';
 import Meta from './components/meta/Meta.jsx';
