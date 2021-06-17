@@ -1,0 +1,246 @@
+/* Globals & Variables */
+/* Detail Component */
+/* Skills Component */
+/* Meta Component */
+/* Globals */
+/* Meta */
+/* Outcomes */
+/* Meta */
+/* Facts Component */
+&:root {
+	--main: #373A3C;
+	--light-grey: #666;
+	--border-grey: #E3E4E5;
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+	box-sizing: border-box;
+}
+#about {
+	margin: 0 auto;
+	padding: 0 12px 24px 12px;
+}
+.about {
+	display: flex;
+	min-width: 984px;
+	.two-three {
+		margin: 24px 0 0 0;
+		padding: 0 12px;
+	}
+	.one-three {
+		padding: 0 12px;
+	}
+}
+.two-three {
+	width: 66.666vw;
+}
+.one-three {
+	width: 33.333vw;
+}
+#detail {
+	h2 {
+		margin: 0;
+		padding: 0;
+		font-weight: 700;
+		font-size: 24px;
+		color: var(--main);
+		box-sizing: border-box;
+	}
+}
+.recent-views {
+	font-weight: 700;
+	color: var(--light-grey);
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+.description {
+	font-size: 14px;
+	line-height: 21px;
+	color: var(--main);
+}
+.expandable {
+	max-height: 100px;
+	overflow: hidden;
+	transition: max-height 1s ease-in-out;
+	&:hover {
+		cursor: pointer;
+	}
+}
+div.expanded {
+	max-height: 1500px;
+	&:hover {
+		cursor: text;
+	}
+}
+.show-more-button {
+	button {
+		font-size: 14px;
+		font-weight: 700;
+		line-height: 1.5;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background-color: transparent;
+		color: #2a73cc;
+		&:hover {
+			color: #014C8C;
+			text-decoration: underline;
+		}
+	}
+}
+.expanded {
+	button {
+		display: none;
+	}
+}
+.skills {
+	margin: 24px 0;
+	padding: 16px 24px 24px;
+	border: 1px solid var(--border-grey);
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	h2 {
+		margin: 0 0 24px 0;
+		font-size: 14px;
+		line-height: 24px;
+		text-transform: uppercase;
+		color: #6E767F;
+	}
+}
+.skills-list {
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+.skill-name {
+	font-size: 14px;
+	line-height: 24px;
+	color: #1F1F1F;
+	border-radius: 30px;
+	background-color: #EBECED;
+	margin: 0 8px 8px 0;
+	padding: 3px 18px 3px 18px;
+	list-style-type: none;
+}
+#meta {
+	margin: 24px 0 0 0;
+	padding: 0 0 0 24px;
+}
+#outcomes {
+	color: var(--main);
+	background-color: #F8F8F8;
+	margin: 10px 0;
+	padding: 20px 25px 10px;
+}
+.outcomes-title-set {
+	color: var(--main);
+	display: flex;
+	align-items: center;
+	margin: 0 0 16px 0;
+}
+.outcomes-title-set-icon {
+	position: relative;
+	top: 25%;
+	left: 25%;
+	display: block;
+	height: 20px;
+	width: 20px;
+	margin: 0;
+}
+.outcomes-title-set-title {
+	font-size: 14px;
+	line-height: 21px;
+	font-weight: 700;
+	margin: 0 0 0 20px;
+}
+.icon-background {
+	height: 44px;
+	width: 44px;
+	border-radius: 50%;
+}
+.icon-container {
+	height: 44px;
+	width: 44px;
+	border-radius: 50%;
+}
+.outcome-icon {
+	height: 22px;
+	width: 22px;
+	fill: white;
+	position: relative;
+	top: 25%;
+	left: 25%;
+}
+.user-icon {
+	fill: rgb(32, 88, 157);
+}
+.careerDirectionSVG {
+	background-image: linear-gradient( 90deg , rgb(72, 207, 173), rgb(59, 175, 218));
+}
+.careerBenefitSVG {
+	background-image: linear-gradient( 90deg , rgb(93, 156, 236), rgb(150, 122, 220));
+}
+.careerPromotionSVG {
+	background-image: linear-gradient( 90deg , rgb(160, 212, 104), rgb(55, 188, 155));
+}
+.circle-outline {
+	height: 44px;
+	width: 44px;
+	border: 2px solid #E1E1E1;
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+.outcome-set {
+	display: flex;
+	align-items: center;
+	margin: 0 0 16px 0;
+}
+.outcome-pct {
+	font-size: 34px;
+	line-height: 1.25;
+	font-weight: 300;
+	margin: 0 16px;
+}
+.outcome-subtitle {
+	font-size: .9rem;
+	font-weight: normal;
+	text-align: center;
+}
+.fact-set {
+	display: flex;
+	align-items: center;
+	padding: 8px 0 0;
+	margin: 0 0 24px;
+	.circle {
+		margin: 0 16px 8px 8px;
+	}
+	.circle-frame {
+		height: 44px;
+		width: 44px;
+	}
+}
+.fact-title {
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 24px;
+	margin: 0;
+	padding: 0;
+}
+.fact-subtitle {
+	font-size: .9rem;
+	color: #6E767F;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+.fact-icon {
+	height: 20px;
+	width: 20px;
+	fill: rgb(140, 21, 21);
+	position: relative;
+	top: 25%;
+	left: 25%;
+}
