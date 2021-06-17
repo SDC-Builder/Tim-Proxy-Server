@@ -29,6 +29,10 @@ app.get('/loaderio-b5cce8ed78056fea633f38082af3c119', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public', 'token.txt'));
 });
 
+app.get('/loaderio-1d93b97eba634c38967bbb88d2ac85cb', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public', 'token3.txt'));
+});
+
 // valid route still exists for depricated proxy servers
 app.get('/about/bundle.js', async (req, res) => {
   try {
