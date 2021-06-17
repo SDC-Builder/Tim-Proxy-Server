@@ -2,6 +2,7 @@ import React from 'react';
 
 const Detail = (props) => {
   const { state, expanded, click } = props;
+
   return (
     <div id="detail">
       <h2>About this Course</h2>

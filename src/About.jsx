@@ -62,27 +62,27 @@ export class About extends React.Component {
     };
   }
 
-  componentDidMount() {
-    let courseID;
-    if (document) {
-      const pathItems = window.location.href.split('/');
-      courseID = pathItems[pathItems.length - 1];
-    }
-    courseID = !courseID ? 1 : courseID;
-    // console.log('fetching data with course id', courseID);
-    fetch(`/api/about/${courseID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ courseInfo: data });
-      })
-      .catch((err) => console.error(err));
-    // fetch('https://gifbucket.s3-us-west-1.amazonaws.com/svgs.js')
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     this.setState({ svgs: data });
-    //   });
-  }
+  // componentDidMount() {
+  //   let courseID;
+  //   if (document) {
+  //     const pathItems = window.location.href.split('/');
+  //     courseID = pathItems[pathItems.length - 1];
+  //   }
+  //   courseID = !courseID ? 1 : courseID;
+  //   // console.log('fetching data with course id', courseID);
+  //   fetch(`/api/about/${courseID}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       this.setState({ courseInfo: data });
+  //     })
+  //     .catch((err) => console.error(err));
+  //   // fetch('https://gifbucket.s3-us-west-1.amazonaws.com/svgs.js')
+  //   //   .then((response) => response.json())
+  //   //   .then((data) => {
+  //   //     this.setState({ svgs: data });
+  //   //   });
+  // }
 
   expand() {
     this.setState({ expanded: 'expanded' });

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Skills = (props) => {
-  console.log('alkjsdfa;lkdjsfa;lkdjsf;lakjsdf;lakjsdf;lkja')
+  // console.log('alkjsdfa;lkdjsfa;lkdjsf;lakjsdf;lakjsdf;lkja')
   const { state } = props;
   return (
     <div className="skills">
