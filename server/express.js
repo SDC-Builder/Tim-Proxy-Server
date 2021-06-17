@@ -29,6 +29,10 @@ app.get('/loaderio-b5cce8ed78056fea633f38082af3c119', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public', 'token.txt'));
 });
 
+app.get('/loaderio-0f0b671c71fa00f9eb121a3dd31083a5', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public', 'token2.txt'));
+});
+
 app.get('/loaderio-1d93b97eba634c38967bbb88d2ac85cb', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public', 'token3.txt'));
 });
