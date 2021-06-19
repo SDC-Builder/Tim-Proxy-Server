@@ -10,7 +10,10 @@ const PORT = 3000;
 
 const redis = require('redis');
 
-const client = redis.createClient();
+const client = redis.createClient({
+  host: '172.31.10.128',
+  port: 6379,
+});
 
 // import About component
 const { About } = require('../src/About');
