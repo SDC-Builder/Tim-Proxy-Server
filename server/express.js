@@ -4,6 +4,7 @@ const axios = require('axios').default;
 const fs = require('fs');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
+const { promisify } = require("util");
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +15,11 @@ const client = redis.createClient({
   host: '172.31.10.128',
   port: 6379,
 });
+
+const getCache = promisify(client.get).bind(client);
+const setCache = promisify(client.set).bind(client);
+
+// const client = redis.createClient();
 
 // import About component
 const { About } = require('../src/About');
@@ -64,37 +70,52 @@ app.get('/api/about/:id', async (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 // });
 
-const getData = async (id, cb) => {
-  client.get(`${id}`, async (err, results) => {
-    if (results) {
-      cb(JSON.parse(results));
-    } else {
-      const { data } = await axios.get(`http://172.31.5.204:3002/api/about/${id}`);
-      client.setex(`${id}`, 5, JSON.stringify(data));
-      cb(data);
-    }
-  });
-};
+// const getData = async (id, cb) => {
+//   client.get(`${id}`, async (err, results) => {
+//     if (results) {
+//       cb(JSON.parse(results));
+//     } else {
+//       const { data } = await axios.get(`http://172.31.5.204:3002/api/about/${id}`);
+//       client.setex(`${id}`, 5, JSON.stringify(data));
+//       cb(data);
+//     }
+//   });
+// };
 
 // SSR
-app.get('/:id', async (req, res) => {
-  getData(req.params.id, (dbObj) => {
-    let indexHTML = fs.readFileSync(path.resolve(__dirname, '../public', 'index.html'), {
-      encoding: 'utf8',
-    });
+// app.get('/:id', async (req, res) => {
+//   getData(req.params.id, (dbObj) => {
+//     let indexHTML = fs.readFileSync(path.resolve(__dirname, '../public', 'index.html'), {
+//       encoding: 'utf8',
+//     });
 
-    // const css = new Set() // CSS for all rendered React components
-    // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()))
-    let appHTML = ReactDOMServer.renderToString(
-        <About state={dbObj}/>
-    );
+//     // const css = new Set() // CSS for all rendered React components
+//     // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()))
+//     let appHTML = ReactDOMServer.renderToString(
+//         <About state={dbObj}/>
+//     );
     
-    indexHTML = indexHTML.replace('<div id="about" class="spaced"></div>', `<div id="about" class="spaced"> ${appHTML} </div><script>window.__INITIAL__DATA__ = ${JSON.stringify(dbObj)}</script>`);
+//     indexHTML = indexHTML.replace('<div id="about" class="spaced"></div>', `<div id="about" class="spaced"> ${appHTML} </div><script>window.__INITIAL__DATA__ = ${JSON.stringify(dbObj)}</script>`);
 
-    res.contentType('text/html');
-    res.status(200);
-    return res.send(indexHTML);
+//     res.contentType('text/html');
+//     res.status(200);
+//     return res.send(indexHTML);
+//   });
+// });
+
+// SSR Refactor
+app.get('/:id', async (req, res) => {
+  const cachedHTML = await getCache(req.params.id);
+  if (cachedHTML) { return res.send(cachedHTML); }
+  let indexHTML = fs.readFileSync(path.resolve(__dirname, '../public', 'index.html'), {
+    encoding: 'utf8',
   });
+  // const { data } = await axios.get(`http://localhost:3002/api/about/${req.params.id}`);
+  const { data } = await axios.get(`http://172.31.5.204:3002/api/about/${req.params.id}`);
+  const appHTML = ReactDOMServer.renderToString(<About state={data} />);
+  indexHTML = indexHTML.replace('<div id="about" class="spaced"></div>', `<div id="about" class="spaced"> ${appHTML} </div><script>window.__INITIAL__DATA__ = ${JSON.stringify(data)}</script>`);
+  res.send(indexHTML);
+  return setCache(req.params.id, indexHTML, 'EX', 5);
 });
 
 app.listen(PORT, () => {
