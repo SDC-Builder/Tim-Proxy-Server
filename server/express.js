@@ -115,7 +115,7 @@ app.get('/:id', async (req, res) => {
   const appHTML = ReactDOMServer.renderToString(<About state={data} />);
   indexHTML = indexHTML.replace('<div id="about" class="spaced"></div>', `<div id="about" class="spaced"> ${appHTML} </div><script>window.__INITIAL__DATA__ = ${JSON.stringify(data)}</script>`);
   res.send(indexHTML);
-  return setCache(req.params.id, indexHTML, 'EX', 5);
+  return setCache(req.params.id, indexHTML, 'EX', 60);
 });
 
 app.listen(PORT, () => {
